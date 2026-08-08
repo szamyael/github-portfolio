@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sk Briddon Dumlao — Full-Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1B2A;
+    --ink-soft:#162B40;
+    --paper:#EFF3F1;
+    --paper-dim:#E4EAE6;
+    --teal:#157A6E;
+    --teal-bright:#1E9B8A;
+    --gold:#E3A73A;
+    --slate:#24313D;
+    --slate-soft:#5C6B72;
+    --line:#CFD8D3;
+    --line-dark:#2A3B4C;
+    --white:#FFFFFF;
+    --radius:14px;
+    --shadow: 0 20px 40px -20px rgba(15,27,42,0.25);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--slate);
+    background:var(--paper);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    color:var(--ink);
+  }
+
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+
+  :focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  section{
+    padding:120px 0;
+  }
+
+  @media (max-width:768px){
+    section{padding:80px 0;}
+    .container{padding:0 22px;}
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    background:rgba(239,243,241,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    transition:background .3s ease;
+  }
+  .nav-inner{
+    max-width:1180px;
+    margin:0 auto;
+    padding:18px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .nav-id{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .nav-id .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.65rem;
+    font-weight:500;
+    color:var(--white);
+    background:var(--teal);
+    padding:3px 8px;
+    border-radius:5px;
+    letter-spacing:0.03em;
+  }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-size:0.9rem;
+    font-weight:500;
+  }
+  .nav-links a{
+    color:var(--slate-soft);
+    position:relative;
+    padding:4px 0;
+    transition:color .2s ease;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0;bottom:-3px;
+    width:0;height:2px;
+    background:var(--gold);
+    transition:width .25s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-toggle{display:none;}
+
+  @media (max-width:768px){
+    .nav-links{
+      position:fixed;
+      top:60px;right:0;
+      background:var(--ink);
+      flex-direction:column;
+      width:220px;
+      padding:24px;
+      gap:20px;
+      transform:translateX(100%);
+      transition:transform .3s ease;
+      border-radius:0 0 0 var(--radius);
+    }
+    .nav-links.open{transform:translateX(0);}
+    .nav-links a{color:var(--paper);}
+    .nav-toggle{
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+      background:none;
+      border:none;
+      cursor:pointer;
+      padding:6px;
+    }
+    .nav-toggle span{
+      width:22px;height:2px;background:var(--ink);
+      border-radius:2px;
+    }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding-top:100px;
+    position:relative;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% 15%, rgba(21,122,110,0.08), transparent),
+      var(--paper);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:60px;
+    align-items:center;
+  }
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr; gap:56px;}
+    .hero{padding-top:120px;}
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    color:var(--teal);
+    background:rgba(21,122,110,0.09);
+    border:1px solid rgba(21,122,110,0.25);
+    padding:6px 14px;
+    border-radius:20px;
+    margin-bottom:24px;
+  }
+  .eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--gold);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:0.35;}
+  }
+
+  .hero h1{
+    font-size:clamp(2.4rem, 5.2vw, 4.1rem);
+    line-height:1.05;
+    margin-bottom:22px;
+  }
+  .hero h1 .accent{color:var(--teal);}
+
+  .hero p.lede{
+    font-size:1.1rem;
+    color:var(--slate-soft);
+    max-width:520px;
+    margin-bottom:36px;
+  }
+
+  .btn-row{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:0.95rem;
+    padding:14px 28px;
+    border-radius:9px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .2s ease, box-shadow .2s ease;
+    cursor:pointer;
+    border:none;
+  }
+  .btn-primary{
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 24px -10px rgba(15,27,42,0.4);
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink);
+    border:1.5px solid var(--line-dark);
+  }
+  .btn-ghost:hover{
+    background:var(--ink);
+    color:var(--paper);
+  }
+
+  /* ---- Badge card (signature element) ---- */
+  .badge-wrap{
+    display:flex;
+    justify-content:center;
+    perspective:1200px;
+  }
+  .badge-card{
+    width:100%;
+    max-width:340px;
+    background:var(--ink);
+    border-radius:20px;
+    padding:28px;
+    color:var(--paper);
+    position:relative;
+    box-shadow:var(--shadow);
+    border:1px solid var(--line-dark);
+    transform:rotate(2deg);
+    transition:transform .4s ease;
+  }
+  .badge-card:hover{transform:rotate(0deg) translateY(-6px);}
+
+  .badge-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:22px;
+  }
+  .badge-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    letter-spacing:0.12em;
+    color:var(--teal-bright);
+    text-transform:uppercase;
+  }
+  .badge-id{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:rgba(239,243,241,0.5);
+  }
+
+  .badge-photo{
+    width:100%;
+    aspect-ratio:1/0.72;
+    border-radius:12px;
+    background:linear-gradient(135deg, rgba(21,122,110,0.35), rgba(227,167,58,0.25));
+    border:1px solid rgba(239,243,241,0.15);
+    margin-bottom:20px;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .badge-photo .initials{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:3rem;
+    font-weight:700;
+    color:rgba(239,243,241,0.9);
+  }
+
+  .badge-name{
+    font-size:1.35rem;
+    color:var(--paper);
+    margin-bottom:4px;
+  }
+  .badge-role{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    color:var(--gold);
+    margin-bottom:20px;
+  }
+
+  .badge-stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    padding-top:18px;
+    border-top:1px dashed rgba(239,243,241,0.2);
+  }
+  .badge-stat-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.62rem;
+    color:rgba(239,243,241,0.45);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:3px;
+  }
+  .badge-stat-val{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:0.95rem;
+    color:var(--paper);
+  }
+
+  .qr-pattern{
+    position:absolute;
+    bottom:20px;right:20px;
+    width:46px;height:46px;
+    opacity:0.7;
+  }
+  .qr-pattern svg{width:100%;height:100%;}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-head{
+    margin-bottom:56px;
+    max-width:640px;
+  }
+  .section-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    margin-bottom:14px;
+    display:block;
+  }
+  .section-head h2{
+    font-size:clamp(1.8rem, 3.4vw, 2.5rem);
+    margin-bottom:14px;
+  }
+  .section-head p{
+    color:var(--slate-soft);
+    font-size:1.02rem;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--white);}
+  .about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:64px;
+    align-items:start;
+  }
+  @media (max-width:860px){
+    .about-grid{grid-template-columns:1fr; gap:44px;}
+  }
+  .about-text p{
+    color:var(--slate-soft);
+    margin-bottom:18px;
+    font-size:1.02rem;
+  }
+  .about-text strong{color:var(--ink);}
+
+  .goal-list{margin-top:28px;}
+  .goal-item{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .goal-item:last-child{border-bottom:1px solid var(--line);}
+  .goal-icon{
+    width:34px;height:34px;
+    border-radius:8px;
+    background:rgba(21,122,110,0.1);
+    color:var(--teal);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem;
+    font-weight:600;
+  }
+  .goal-text h4{font-size:1rem;margin-bottom:3px;}
+  .goal-text p{color:var(--slate-soft);font-size:0.92rem;}
+
+  .edu-block h3{
+    font-size:1rem;
+    margin-bottom:20px;
+    color:var(--ink);
+  }
+  .edu-item{
+    position:relative;
+    padding:0 0 26px 28px;
+    border-left:2px solid var(--line);
+  }
+  .edu-item:last-child{border-color:transparent;padding-bottom:0;}
+  .edu-item::before{
+    content:'';
+    position:absolute;
+    left:-6px;top:2px;
+    width:10px;height:10px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--teal);
+  }
+  .edu-stage{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:4px;
+  }
+  .edu-school{font-weight:600;color:var(--ink);font-size:0.98rem;margin-bottom:2px;}
+  .edu-loc{color:var(--slate-soft);font-size:0.88rem;}
+
+  /* ---------- JOURNEY / CHANGELOG ---------- */
+  .journey{background:var(--paper);}
+  .changelog{
+    position:relative;
+    max-width:780px;
+  }
+  .changelog::before{
+    content:'';
+    position:absolute;
+    left:70px;
+    top:8px;bottom:8px;
+    width:2px;
+    background:linear-gradient(to bottom, var(--teal), var(--line) 90%);
+  }
+  @media (max-width:600px){
+    .changelog::before{left:26px;}
+  }
+  .release{
+    position:relative;
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:0 28px;
+    padding-bottom:52px;
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .release.in-view{opacity:1;transform:translateY(0);}
+  .release:last-child{padding-bottom:0;}
+  @media (max-width:600px){
+    .release{grid-template-columns:46px 1fr;}
+  }
+  .release-version{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:0.82rem;
+    color:var(--white);
+    background:var(--ink);
+    border-radius:20px;
+    padding:6px 0;
+    text-align:center;
+    height:fit-content;
+    position:relative;
+    z-index:2;
+  }
+  .release.current .release-version{background:var(--gold);color:var(--ink);}
+  @media (max-width:600px){
+    .release-version{font-size:0.6rem;padding:5px 0;}
+  }
+  .release-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 26px;
+  }
+  .release-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .release-title{font-size:1.08rem;color:var(--ink);}
+  .release-when{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    color:var(--slate-soft);
+  }
+  .release-desc{color:var(--slate-soft);font-size:0.94rem;margin-bottom:12px;}
+  .release-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .release-tags span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    background:var(--paper-dim);
+    color:var(--slate);
+    padding:4px 10px;
+    border-radius:6px;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills{background:var(--white);}
+  .skills-cat{margin-bottom:44px;}
+  .skills-cat h3{
+    font-size:0.95rem;
+    font-family:'JetBrains Mono',monospace;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:20px;
+    font-weight:600;
+  }
+  .badge-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+    gap:14px;
+  }
+  .skill-badge{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 16px;
+    text-align:center;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    cursor:default;
+  }
+  .skill-badge:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 24px -14px rgba(15,27,42,0.3);
+    border-color:var(--teal);
+  }
+  .skill-badge .mark{
+    width:38px;height:38px;
+    border-radius:50%;
+    background:var(--ink);
+    color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    font-weight:600;
+  }
+  .skill-badge .name{
+    font-weight:600;
+    font-size:0.9rem;
+    color:var(--ink);
+  }
+
+  .soft-skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .soft-pill{
+    padding:10px 18px;
+    background:var(--ink);
+    color:var(--paper);
+    border-radius:24px;
+    font-size:0.88rem;
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .soft-pill::before{
+    content:'';
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--gold);
+  }
+
+  /* ---------- PROJECT ---------- */
+  .project{background:var(--ink); color:var(--paper);}
+  .project .section-tag{color:var(--gold);}
+  .project .section-head h2{color:var(--paper);}
+  .project .section-head p{color:rgba(239,243,241,0.65);}
+
+  .project-panel{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+    background:var(--ink-soft);
+    border:1px solid var(--line-dark);
+    border-radius:20px;
+    padding:48px;
+  }
+  @media (max-width:900px){
+    .project-panel{grid-template-columns:1fr; padding:32px 24px; gap:32px;}
+  }
+
+  .project-visual{
+    position:relative;
+    border-radius:16px;
+    overflow:hidden;
+    background:linear-gradient(160deg, rgba(21,122,110,0.4), rgba(227,167,58,0.15));
+    border:1px solid rgba(239,243,241,0.12);
+    padding:28px;
+    min-height:320px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .mock-topbar{
+    display:flex;
+    gap:6px;
+    margin-bottom:24px;
+  }
+  .mock-topbar span{
+    width:10px;height:10px;border-radius:50%;
+    background:rgba(239,243,241,0.3);
+  }
+  .mock-qr{
+    align-self:center;
+    width:130px;height:130px;
+    background:var(--paper);
+    border-radius:12px;
+    padding:12px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;
+  }
+  .mock-qr svg{width:100%;height:100%;}
+  .mock-badges{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .mock-badges span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.68rem;
+    background:rgba(239,243,241,0.12);
+    color:var(--paper);
+    padding:6px 12px;
+    border-radius:20px;
+    border:1px solid rgba(239,243,241,0.18);
+  }
+
+  .project-name{font-size:1.9rem;color:var(--paper);margin-bottom:10px;}
+  .project-tagline{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--gold);
+    font-size:0.85rem;
+    margin-bottom:20px;
+  }
+  .project-desc{color:rgba(239,243,241,0.72);margin-bottom:26px;font-size:0.98rem;}
+
+  .feature-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:480px){
+    .feature-grid{grid-template-columns:1fr;}
+  }
+  .feature-item{
+    background:rgba(239,243,241,0.06);
+    border:1px solid rgba(239,243,241,0.12);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .feature-item .f-title{
+    font-weight:600;
+    font-size:0.9rem;
+    color:var(--paper);
+    margin-bottom:3px;
+  }
+  .feature-item .f-desc{
+    font-size:0.8rem;
+    color:rgba(239,243,241,0.55);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    background:var(--paper);
+    text-align:center;
+  }
+  .contact h2{
+    font-size:clamp(1.9rem, 4vw, 2.8rem);
+    margin-bottom:18px;
+  }
+  .contact p{
+    color:var(--slate-soft);
+    max-width:480px;
+    margin:0 auto 36px;
+  }
+  .contact-links{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+  }
+  .contact-links a{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.88rem;
+    padding:12px 22px;
+    border:1.5px solid var(--line-dark);
+    border-radius:9px;
+    color:var(--ink);
+    transition:all .2s ease;
+  }
+  .contact-links a:hover{
+    background:var(--ink);
+    color:var(--paper);
+    transform:translateY(-2px);
+  }
+  .contact-note{
+    font-size:0.78rem;
+    color:var(--slate-soft);
+    opacity:0.7;
+  }
+
+  footer{
+    padding:28px 0;
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    color:var(--slate-soft);
+    border-top:1px solid var(--line);
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-id">SBD <span class="tag">v5.0</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#project">Project</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> AVAILABLE FOR OPPORTUNITIES</span>
+      <h1>Sk Briddon Dumlao builds <span class="accent">full-stack systems</span> people actually check in to.</h1>
+      <p class="lede">BSIT student at Laguna State Polytechnic University, Sta. Cruz. I build end-to-end web applications — from database to deployment — and I'm working toward becoming a full-fledged Full-Stack Developer and Data Analyst.</p>
+      <div class="btn-row">
+        <a href="#project" class="btn btn-primary">See my work</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="badge-wrap">
+      <div class="badge-card">
+        <div class="badge-top">
+          <span class="badge-label">Developer ID</span>
+          <span class="badge-id">#0123-1482</span>
+        </div>
+        <div class="badge-photo">
+          <picture>
+            <source type="image/webp" srcset="_DSC2406.webp 1200w, _DSC2406-800.webp 800w, _DSC2406-400.webp 400w" sizes="(max-width:900px) 80vw, 340px">
+            <img src="_DSC2406.JPG"
+                 srcset="_DSC2406.JPG 1200w, _DSC2406.JPG 800w, _DSC2406.JPG 400w"
+                 sizes="(max-width:900px) 80vw, 340px"
+                 alt="Sk Briddon Dumlao"
+                 style="width:100%;height:100%;object-fit:cover;display:block;"
+                 loading="lazy"
+                 decoding="async" />
+          </picture>
+        </div>
+        <div class="badge-name">Sk Briddon T. Dumlao</div>
+        <div class="badge-role mono">FULL-STACK DEVELOPER</div>
+        <div class="badge-stats">
+          <div>
+            <div class="badge-stat-label">Base</div>
+            <div class="badge-stat-val">Laguna, PH</div>
+          </div>
+          <div>
+            <div class="badge-stat-label">Status</div>
+            <div class="badge-stat-val">4th Year, BSIT</div>
+          </div>
+          <div>
+            <div class="badge-stat-label">Stack</div>
+            <div class="badge-stat-val">Python · React</div>
+          </div>
+          <div>
+            <div class="badge-stat-label">Focus</div>
+            <div class="badge-stat-val">Web · Data</div>
+          </div>
+        </div>
+        <div class="qr-pattern">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="#E3A73A">
+            <rect x="0" y="0" width="8" height="8"/><rect x="16" y="0" width="8" height="8"/><rect x="32" y="0" width="8" height="8"/>
+            <rect x="8" y="8" width="8" height="8"/><rect x="24" y="8" width="8" height="8"/>
+            <rect x="0" y="16" width="8" height="8"/><rect x="16" y="16" width="8" height="8"/><rect x="32" y="16" width="8" height="8"/>
+            <rect x="8" y="24" width="8" height="8"/><rect x="24" y="24" width="8" height="8"/>
+            <rect x="0" y="32" width="8" height="8"/><rect x="16" y="32" width="8" height="8"/><rect x="32" y="32" width="8" height="8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-tag">// About</span>
+      <h2>From TVL classrooms to full-stack systems.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I wrote my first lines of code during Senior High School under the <strong>TVL – Computer Programming</strong> strand. That early exposure to logic and syntax turned into a full commitment: I'm now a BSIT student at <strong>Laguna State Polytechnic University, Sta. Cruz Campus</strong>, building complete web applications from the database up.</p>
+        <p>I care about systems that solve real, local problems — the kind that combine clean backend logic with an interface people genuinely enjoy using. That's the thread running through everything I build.</p>
+
+        <div class="goal-list">
+          <div class="goal-item">
+            <div class="goal-icon">01</div>
+            <div class="goal-text">
+              <h4>Full-fledged Full-Stack Developer</h4>
+              <p>Owning a product end-to-end — backend logic, frontend experience, and everything that connects them.</p>
+            </div>
+          </div>
+          <div class="goal-item">
+            <div class="goal-icon">02</div>
+            <div class="goal-text">
+              <h4>Data Analyst</h4>
+              <p>Turning the data these systems generate into decisions — not just dashboards.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="edu-block reveal">
+        <h3 class="mono">// Education</h3>
+        <div class="edu-item">
+          <div class="edu-stage">College · Current</div>
+          <div class="edu-school">Laguna State Polytechnic University</div>
+          <div class="edu-loc">Sta. Cruz Campus — BS Information Technology</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-stage">Senior High</div>
+          <div class="edu-school">Angelita V. delMundo Foundation Inc.</div>
+          <div class="edu-loc">Pagsanjan, Laguna — TVL, Computer Programming</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-stage">Junior High</div>
+          <div class="edu-school">Pagsanjan Integrated National High School</div>
+          <div class="edu-loc">Pagsanjan, Laguna</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-stage">Primary</div>
+          <div class="edu-school">Mamatid Elementary School</div>
+          <div class="edu-loc">Cabuyao, Laguna</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="journey" id="journey">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-tag">// Growth Log</span>
+      <h2>My skills, shipped like software — one release at a time.</h2>
+      <p>Every stage of school added a real capability. Here's the changelog.</p>
+    </div>
+
+    <div class="changelog">
+      <div class="release reveal">
+        <div class="release-version">v1.0</div>
+        <div class="release-card">
+          <div class="release-meta">
+            <span class="release-title">First Compile</span>
+            <span class="release-when mono">Senior High</span>
+          </div>
+          <p class="release-desc">Took the TVL – Computer Programming strand and wrote my first real programs. Learned the logic before the language mattered.</p>
+          <div class="release-tags"><span>Programming Logic</span><span>Fundamentals</span></div>
+        </div>
+      </div>
+
+      <div class="release reveal">
+        <div class="release-version">v2.0</div>
+        <div class="release-card">
+          <div class="release-meta">
+            <span class="release-title">Structured Data</span>
+            <span class="release-when mono">BSIT — Year 1</span>
+          </div>
+          <p class="release-desc">Entered LSPU Sta. Cruz and started thinking in tables and relationships instead of just scripts.</p>
+          <div class="release-tags"><span>SQL</span><span>SQLite</span></div>
+        </div>
+      </div>
+
+      <div class="release reveal">
+        <div class="release-version">v3.0</div>
+        <div class="release-card">
+          <div class="release-meta">
+            <span class="release-title">Backend Online</span>
+            <span class="release-when mono">BSIT — Year 2</span>
+          </div>
+          <p class="release-desc">Picked up Python and Flask, and started building real server-side logic instead of just static pages.</p>
+          <div class="release-tags"><span>Python</span><span>Flask</span><span>HTML/CSS/JS</span></div>
+        </div>
+      </div>
+
+      <div class="release reveal">
+        <div class="release-version">v4.0</div>
+        <div class="release-card">
+          <div class="release-meta">
+            <span class="release-title">Modern Frontend</span>
+            <span class="release-when mono">BSIT — Year 3</span>
+          </div>
+          <p class="release-desc">Moved into TypeScript and React, and learned to connect frontend interfaces to real APIs and payment channels.</p>
+          <div class="release-tags"><span>TypeScript</span><span>React</span><span>API Integration</span><span>PayMongo</span></div>
+        </div>
+      </div>
+
+      <div class="release current reveal">
+        <div class="release-version">v5.0</div>
+        <div class="release-card">
+          <div class="release-meta">
+            <span class="release-title">Full-Stack, Shipped</span>
+            <span class="release-when mono">BSIT — Year 4 · Now</span>
+          </div>
+          <p class="release-desc">Bringing every prior release together to build CheckedIn — a complete, real-time full-stack system from database to deployment.</p>
+          <div class="release-tags"><span>Full-Stack</span><span>Real-Time Systems</span><span>Current Build</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-tag">// Skills Unlocked</span>
+      <h2>The toolkit, badge by badge.</h2>
+    </div>
+
+    <div class="skills-cat reveal">
+      <h3>Languages &amp; Frameworks</h3>
+      <div class="badge-grid">
+        <div class="skill-badge"><div class="mark">Py</div><div class="name">Python</div></div>
+        <div class="skill-badge"><div class="mark">Fl</div><div class="name">Flask</div></div>
+        <div class="skill-badge"><div class="mark">Ts</div><div class="name">TypeScript</div></div>
+        <div class="skill-badge"><div class="mark">Rx</div><div class="name">React</div></div>
+        <div class="skill-badge"><div class="mark">Web</div><div class="name">HTML / CSS / JS</div></div>
+        <div class="skill-badge"><div class="mark">DB</div><div class="name">SQL / SQLite</div></div>
+      </div>
+    </div>
+
+    <div class="skills-cat reveal">
+      <h3>Integrations</h3>
+      <div class="badge-grid">
+        <div class="skill-badge"><div class="mark">₱</div><div class="name">PayMongo</div></div>
+        <div class="skill-badge"><div class="mark">API</div><div class="name">API Integration</div></div>
+      </div>
+    </div>
+
+    <div class="skills-cat reveal">
+      <h3>Beyond the Code</h3>
+      <div class="soft-skills">
+        <span class="soft-pill">Leadership</span>
+        <span class="soft-pill">Analytical Thinking</span>
+        <span class="soft-pill">Problem Solving</span>
+        <span class="soft-pill">Communication</span>
+        <span class="soft-pill">Time Management</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="project" id="project">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-tag">// Featured Build</span>
+      <h2>CheckedIn</h2>
+      <p>The project that pulls every release together — a live, gamified event system.</p>
+    </div>
+
+    <div class="project-panel reveal">
+      <div class="project-visual">
+        <div class="mock-topbar"><span></span><span></span><span></span></div>
+        <div class="mock-qr">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="#0F1B2A">
+            <rect x="0" y="0" width="6" height="6"/><rect x="12" y="0" width="6" height="6"/><rect x="24" y="0" width="6" height="6"/><rect x="34" y="0" width="6" height="6"/>
+            <rect x="6" y="6" width="6" height="6"/><rect x="18" y="6" width="6" height="6"/><rect x="30" y="6" width="6" height="6"/>
+            <rect x="0" y="12" width="6" height="6"/><rect x="12" y="12" width="6" height="6"/><rect x="24" y="12" width="6" height="6"/>
+            <rect x="6" y="18" width="6" height="6"/><rect x="18" y="18" width="6" height="6"/><rect x="34" y="18" width="6" height="6"/>
+            <rect x="0" y="24" width="6" height="6"/><rect x="24" y="24" width="6" height="6"/><rect x="30" y="24" width="6" height="6"/>
+            <rect x="12" y="30" width="6" height="6"/><rect x="18" y="30" width="6" height="6"/><rect x="34" y="30" width="6" height="6"/>
+            <rect x="0" y="34" width="6" height="6"/><rect x="6" y="34" width="6" height="6"/><rect x="24" y="34" width="6" height="6"/>
+          </svg>
+        </div>
+        <div class="mock-badges">
+          <span>🏅 Badge Earned</span>
+          <span>📍 Geofence Verified</span>
+          <span>📊 Live Analytics</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="project-name">CheckedIn</div>
+        <div class="project-tagline mono">QR Attendance · Reporting · Gamification</div>
+        <p class="project-desc">A QR-based event attendance system built for schools and organizations. It verifies who's actually present, generates instant reports, and turns attendance into a game — students earn badges and incentives the more events they check in to.</p>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="f-title">QR Check-In</div>
+            <div class="f-desc">Fast, verifiable attendance scanning</div>
+          </div>
+          <div class="feature-item">
+            <div class="f-title">OCR</div>
+            <div class="f-desc">Reads ID and form data automatically</div>
+          </div>
+          <div class="feature-item">
+            <div class="f-title">Geo-Fencing</div>
+            <div class="f-desc">Confirms attendees are actually on-site</div>
+          </div>
+          <div class="feature-item">
+            <div class="f-title">Real-Time Analytics</div>
+            <div class="f-desc">Live reports as events happen</div>
+          </div>
+          <div class="feature-item">
+            <div class="f-title">Gamified Badges</div>
+            <div class="f-desc">Bingo-style badge board per event</div>
+          </div>
+          <div class="feature-item">
+            <div class="f-title">Incentives</div>
+            <div class="f-desc">Rewards for consistent attendance</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <h2 class="reveal">Let's build something worth checking in to.</h2>
+    <p class="reveal">Open to internships, junior developer roles, and collaborations. Reach out — I reply fast.</p>
+    <div class="contact-links reveal">
+      <a href="mailto:briddondml2004@example.com">Email</a>
+      <a href="https://github.com/szamyael" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/sk-briddon-dumlao-b27345346/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <p class="contact-note">Swap in your real email, GitHub, and LinkedIn links above.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">SK BRIDDON T. DUMLAO — BUILD v5.0 — © 2026</div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .release');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
